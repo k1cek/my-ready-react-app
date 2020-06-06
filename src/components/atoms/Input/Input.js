@@ -1,5 +1,5 @@
 import styled, { css } from 'styled-components';
-import lupka from 'assets/magnifier.svg';
+import lupka from 'assets/icons/magnifier.svg';
 
 const Input = styled.input`
   padding: 15px 30px;

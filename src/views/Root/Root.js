@@ -1,20 +1,20 @@
 import React from 'react';
-import { ThemeProvider } from 'styled-components';
-import Button from 'components/atoms/Button/Button';
-import { theme } from 'theme/mainTheme';
-import GlobalStyle from '../../theme/GlobalStyle';
+import { BrowserRouter, Switch, Route } from 'react-router-dom';
+import MainTemplate from 'templates/MainTemplate';
+import Articles from 'views/Articles';
+import Notes from 'views/Notes';
+import Twitters from 'views/Twitters';
 
 const Root = () => (
-  <div>
-    <GlobalStyle />
-    <ThemeProvider theme={theme}>
-      <>
-        <h1>Hello zayonsee</h1>
-        <Button>open / close</Button>
-        <Button secondary>open / close</Button>
-      </>
-    </ThemeProvider>
-  </div>
+  <BrowserRouter>
+    <MainTemplate>
+      <Switch>
+        <Route exact path="/" component={Notes} />
+        <Route path="/articles" component={Articles} />
+        <Route path="/twitters" component={Twitters} />
+      </Switch>
+    </MainTemplate>
+  </BrowserRouter>
 );
 
 export default Root;

@@ -10,6 +10,7 @@
     "import/prefer-default-export": 0,
     "import/no-estraneous-dependencies": 0,
     "import/no-unresolved": 1,
+    "import/no-extraneous-dependencies": ["error", { "devDependencies": true }],
     "react/jsx-filename-extension": [
       1,
       {

@@ -1,14 +1,14 @@
 import styled, { css } from 'styled-components';
 
 const Button = styled.button`
-  background-color: ${({ theme }) => theme.primary};
+  background-color: ${({ theme }) => theme.note};
   width: 220px;
   height: 47px;
   border: none;
   border-radius: 50px;
   font-family: 'Montserrat', sans-serif;
   cursor: pointer;
-  box-shadow: 0 10px 40px -6px rgb(77, 77, 77);
+  /* box-shadow: 0 10px 40px -6px rgb(77, 77, 77); */
   font-weight: 500;
   font-size: 16px;
   text-transform: uppercase;
