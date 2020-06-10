@@ -10,13 +10,11 @@ const PageSidebar = ({ children, ewelina }) => (
 );
 
 PageSidebar.propTypes = {
-  children: PropsTypes.element.isRequired,
-  ewelina: PropsTypes.oneOf(['note', 'twitter', 'article']),
+  children: PropsTypes.oneOfType([PropsTypes.element, PropsTypes.node]).isRequired,
+  ewelina: PropsTypes.oneOf(['notes', 'twitters', 'articles']),
 };
 
 PageSidebar.defaultProps = {
-  ewelina: 'note',
+  ewelina: 'notes',
 };
 export default PageSidebar;
-
-// walidacja powyzej

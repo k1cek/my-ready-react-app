@@ -1,7 +1,8 @@
-import React from 'react';
+import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import styled, { css } from 'styled-components';
 import Heading from 'components/atoms/Heading/Heading';
+import { Redirect } from 'react-router-dom';
 import Paragraph from 'components/atoms/Paragraph/Paragraph';
 import Button from 'components/atoms/Button/Button';
 import Link from 'assets/icons/link.svg';
@@ -40,7 +41,7 @@ const TwitterPicture = styled.img`
   right: 15px;
   top: 15px;
   z-index: 1;
-  border: 5px solid ${({ theme }) => theme.twitter};
+  border: 5px solid ${({ theme }) => theme.twitters};
 `;
 
 const MyLink = styled.a`
@@ -64,39 +65,63 @@ const StyledHeading = styled(Heading)`
 
 const DateInfo = styled(Paragraph)`
   margin: 0 0 5px;
-  font-weight: ${({ theme }) => theme.bold};
+  font-weight: ${({ theme }) => theme.light};
   font-size: ${({ theme }) => theme.fontSize.xs};
 `;
 
-const Card = ({ cardType }) => (
-  <StyledWrapper>
-    <InnerWrapper activeColor={cardType}>
-      {cardType === 'twitter' && (
-        <TwitterPicture src="https://randomuser.me/api/portraits/lego/1.jpg" />
-      )}
-      {cardType === 'article' && (
-        <MyLink target="_blank" href="https://www.flickr.com/photos/kicart/" />
-      )}
-      <StyledHeading>Siemka :)</StyledHeading>
-      <DateInfo>Dziś jest 19 maja 2020 :)</DateInfo>
-    </InnerWrapper>
-    <InnerWrapper flex>
-      <Paragraph>
-        Lorem ipsum dolor sit amet consectetur adipisicing elit. Ipsam, deserunt odio
-        voluptatibus animi esse, aperiam quae repudiandae veniam nisi magni enim beatae
-        tenetur perspiciatis! Vel nulla totam animi libero! Fuga.
-      </Paragraph>
-      <Button secondary>Close</Button>
-    </InnerWrapper>
-  </StyledWrapper>
-);
+class Card extends Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      redirect: false,
+    };
+  }
+
+  render() {
+    this.handleCardClick = () => this.setState({ redirect: true });
+
+    const { id, cardType, title, created, twitterName, articleUrl, content } = this.props;
+    const { redirect } = this.state;
+
+    if (redirect) {
+      return <Redirect to={`${cardType}/${id}`} />;
+    }
+
+    return (
+      <StyledWrapper onClick={this.handleCardClick}>
+        <InnerWrapper activeColor={cardType}>
+          {cardType === 'twitters' && (
+            <TwitterPicture
+              src={`https://randomuser.me/api/portraits/women/${twitterName}.jpg`}
+            />
+          )}
+          {cardType === 'articles' && <MyLink target="_blank" href={articleUrl} />}
+          <StyledHeading>{title}</StyledHeading>
+          <DateInfo>{created}</DateInfo>
+        </InnerWrapper>
+        <InnerWrapper flex>
+          <Paragraph>{content}</Paragraph>
+          <Button secondary>Close</Button>
+        </InnerWrapper>
+      </StyledWrapper>
+    );
+  }
+}
 
 Card.propTypes = {
-  cardType: PropTypes.oneOf(['twitter', 'article']),
+  cardType: PropTypes.oneOf(['notes', 'twitters', 'articles']),
+  title: PropTypes.string.isRequired,
+  created: PropTypes.string.isRequired,
+  twitterName: PropTypes.string,
+  articleUrl: PropTypes.string,
+  content: PropTypes.string.isRequired,
+  id: PropTypes.number.isRequired,
 };
 
 Card.defaultProps = {
-  cardType: 'note',
+  cardType: 'notes',
+  twitterName: null,
+  articleUrl: null,
 };
 
 export default Card;
