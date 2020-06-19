@@ -6,6 +6,8 @@ import { Redirect } from 'react-router-dom';
 import Paragraph from 'components/atoms/Paragraph/Paragraph';
 import Button from 'components/atoms/Button/Button';
 import Link from 'assets/icons/link.svg';
+import { connect } from 'react-redux';
+import { removeItem as removeItemAction } from 'actions';
 
 const StyledWrapper = styled.div`
   min-height: 380px;
@@ -80,7 +82,16 @@ class Card extends Component {
   render() {
     this.handleCardClick = () => this.setState({ redirect: true });
 
-    const { id, cardType, title, created, twitterName, articleUrl, content } = this.props;
+    const {
+      id,
+      cardType,
+      title,
+      created,
+      twitterName,
+      articleUrl,
+      content,
+      removeItem,
+    } = this.props;
     const { redirect } = this.state;
 
     if (redirect) {
@@ -101,7 +112,9 @@ class Card extends Component {
         </InnerWrapper>
         <InnerWrapper flex>
           <Paragraph>{content}</Paragraph>
-          <Button secondary>Close</Button>
+          <Button onClick={() => removeItem(cardType, id)} secondary>
+            REMOVE
+          </Button>
         </InnerWrapper>
       </StyledWrapper>
     );
@@ -116,6 +129,7 @@ Card.propTypes = {
   articleUrl: PropTypes.string,
   content: PropTypes.string.isRequired,
   id: PropTypes.number.isRequired,
+  removeItem: PropTypes.func.isRequired,
 };
 
 Card.defaultProps = {
@@ -124,4 +138,15 @@ Card.defaultProps = {
   articleUrl: null,
 };
 
-export default Card;
+// nasza funkcja bedzie przyjmowac argument a oraz b i bedzie zwracac dispatch w którym zwracac bedzie zaimportowane removeItem, które przyjmuje dwa argumenty, itemType i ID
+
+// removeItem stało się naszym propsem, który jest funkcją
+// BUTTON! Poniewaz removeItem przyjmuje dwa argumenty, musimy uzyc funkcji strzałkowej, która zwraca nam dopiero nasza funkcję
+const mapDispatchToProps = (dispatch) => ({
+  removeItem: (itemType, id) => {
+    console.log(`tutaj: ${itemType}`);
+    dispatch(removeItemAction(itemType, id));
+  },
+});
+
+export default connect(null, mapDispatchToProps)(Card);

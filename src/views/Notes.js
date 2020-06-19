@@ -1,34 +1,12 @@
 import React from 'react';
 import GridViewTemplate from 'templates/GridViewTemplate';
 import Card from 'components/molecules/Card/Card';
+import { connect } from 'react-redux';
+import PropTypes from 'prop-types';
 
-const note = [
-  {
-    id: 1,
-    title: 'my note 1',
-    content:
-      'Lorem ipsum dolor sit amet consectetur adipisicing elit. Obcaecati non illo cumque dolorem earum perferendis nostrum, eaque molestias quae labore libero, voluptas commodi tempora cupiditate doloremque ut veritatis beatae autem.',
-    created: '3 days',
-  },
-  {
-    id: 2,
-    title: 'my note 2',
-    content:
-      'Lorem ipsum dolor sit amet consectetur adipisicing elit. Obcaecati non illo cumque dolorem earum perferendis nostrum, eaque molestias quae labore libero, voluptas commodi tempora cupiditate doloremque ut veritatis beatae autem.',
-    created: '3 days',
-  },
-  {
-    id: 3,
-    title: 'my note 3',
-    content:
-      'Lorem ipsum dolor sit amet consectetur adipisicing elit. Obcaecati non illo cumque dolorem earum perferendis nostrum, eaque molestias quae labore libero, voluptas commodi tempora cupiditate doloremque ut veritatis beatae autem.',
-    created: '3 days',
-  },
-];
-
-const Notes = () => (
-  <GridViewTemplate arrayLength={note.length} ewelina="notes">
-    {note.map(({ title, content, created, id }) => (
+const Notes = ({ notes }) => (
+  <GridViewTemplate arrayLength={notes.length} ewelina="notes">
+    {notes.map(({ title, content, created, id }) => (
       <Card
         cardType="notes"
         title={title}
@@ -41,4 +19,17 @@ const Notes = () => (
   </GridViewTemplate>
 );
 
-export default Notes;
+const mapStateToProps = (state) => {
+  const { notes } = state;
+  return { notes };
+};
+
+// ALBO SZYBCIEJ PONIZEJ
+
+// const mapStateToProps = ({ note }) => ({ note });
+
+Notes.propTypes = {
+  notes: PropTypes.arrayOf(PropTypes.object).isRequired,
+};
+
+export default connect(mapStateToProps)(Notes);

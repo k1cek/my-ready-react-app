@@ -1,59 +1,10 @@
 import React from 'react';
 import GridViewTemplate from 'templates/GridViewTemplate';
 import Card from 'components/molecules/Card/Card';
+import { connect } from 'react-redux';
+import PropTypes from 'prop-types';
 
-const articles = [
-  {
-    id: 1,
-    title: 'Ewelina',
-    content:
-      'Lorem ipsum dolor sit amet consectetur adipisicing elit. Aspernatur velit tempore doloremque dolorem exercitationem, esse est vel dolores eius iusto inventore, reiciendis repellendus suscipit aperiam laboriosam, cumque rem ratione unde.',
-    articleUrl: 'https://www.flickr.com/photos/kicart/',
-    created: '1 day',
-  },
-  {
-    id: 2,
-    title: 'Ewelina śpi',
-    content:
-      'Lorem ipsum dolor sit amet consectetur adipisicing elit. Aspernatur velit tempore doloremque dolorem exercitationem, esse est vel dolores eius iusto inventore, reiciendis repellendus suscipit aperiam laboriosam, cumque rem ratione unde.',
-    articleUrl: 'https://www.flickr.com/photos/kicart/',
-    created: '1 day',
-  },
-  {
-    id: 3,
-    title: 'Karolina',
-    content:
-      'Lorem ipsum dolor sit amet consectetur adipisicing elit. Aspernatur velit tempore doloremque dolorem exercitationem, esse est vel dolores eius iusto inventore, reiciendis repellendus suscipit aperiam laboriosam, cumque rem ratione unde.',
-    articleUrl: 'https://www.flickr.com/photos/kicart/',
-    created: '1 day',
-  },
-  {
-    id: 4,
-    title: 'Ula',
-    content:
-      'Lorem ipsum dolor sit amet consectetur adipisicing elit. Aspernatur velit tempore doloremque dolorem exercitationem, esse est vel dolores eius iusto inventore, reiciendis repellendus suscipit aperiam laboriosam, cumque rem ratione unde.',
-    articleUrl: 'https://www.flickr.com/photos/kicart/',
-    created: '1 day',
-  },
-  {
-    id: 5,
-    title: 'Ewa',
-    content:
-      'Lorem ipsum dolor sit amet consectetur adipisicing elit. Aspernatur velit tempore doloremque dolorem exercitationem, esse est vel dolores eius iusto inventore, reiciendis repellendus suscipit aperiam laboriosam, cumque rem ratione unde.',
-    articleUrl: 'https://www.flickr.com/photos/kicart/',
-    created: '1 day',
-  },
-  {
-    id: 6,
-    title: 'Paulinka',
-    content:
-      'Lorem ipsum dolor sit amet consectetur adipisicing elit. Aspernatur velit tempore doloremque dolorem exercitationem, esse est vel dolores eius iusto inventore, reiciendis repellendus suscipit aperiam laboriosam, cumque rem ratione unde.',
-    articleUrl: 'https://www.flickr.com/photos/kicart/',
-    created: '1 day',
-  },
-];
-
-const Articles = () => (
+const Articles = ({ articles }) => (
   <GridViewTemplate arrayLength={articles.length} ewelina="articles">
     {articles.map(({ title, content, articleUrl, created, id }) => (
       <Card
@@ -69,4 +20,13 @@ const Articles = () => (
   </GridViewTemplate>
 );
 
-export default Articles;
+const mapStateToProps = (state) => {
+  const { articles } = state;
+  return { articles };
+};
+
+Articles.propTypes = {
+  articles: PropTypes.arrayOf(PropTypes.object).isRequired,
+};
+
+export default connect(mapStateToProps)(Articles);

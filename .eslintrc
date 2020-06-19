@@ -1,5 +1,6 @@
 {
   "extends": ["airbnb", "prettier", "prettier/react"],
+  "parser": "babel-eslint",
   "env": {
     "jest": true
   },
@@ -8,6 +9,14 @@
   },
   "rules": {
     "import/prefer-default-export": 0,
+    "no-console": "off",
+    "no-restricted-syntax": [
+      "error",
+      {
+        "selector": "CallExpression[callee.object.name='console'][callee.property.name!=/^(log|warn|error|info|trace)$/]",
+        "message": "Unexpected property on console object was called"
+      }
+    ],
     "import/no-estraneous-dependencies": 0,
     "import/no-unresolved": 1,
     "import/no-extraneous-dependencies": ["error", { "devDependencies": true }],
